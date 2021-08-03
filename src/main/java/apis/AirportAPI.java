@@ -2,7 +2,7 @@ package apis;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONObject;
-//TODO: overload methods to allow for optional parameters
+
 public class AirportAPI {
     private String baseURL = "https://sitaopen.api.aero/data/v3/airports";
     private String apiKey;
@@ -30,11 +30,17 @@ public class AirportAPI {
         return performRequest(request);
     }
 
+    public JSONObject getAllAirports() {
+        return getAllAirports("name");
+    }
+
+
     public JSONObject getAirportByCode(String airportCode) {
         String url = baseURL + "/" + airportCode;
         HttpRequest request = HttpRequest.get(url, true);
         return performRequest(request);
     }
+
 
     public JSONObject getDistanceBetweenTwoAirports(String startAirportCode, String endAirportCode, String unit) {
         String url = baseURL + "/distance/" + startAirportCode + "/" + endAirportCode;
@@ -42,11 +48,21 @@ public class AirportAPI {
         return performRequest(request);
     }
 
+    public JSONObject getDistanceBetweenTwoAirports(String startAirportCode, String endAirportCode) {
+        return getDistanceBetweenTwoAirports(startAirportCode, endAirportCode, "km");
+    }
+
+
     public JSONObject getNearestAirport(double latitude, double longitude, int maxAirports) {
         String url = baseURL + "/nearest/" + latitude + "/" + longitude;
         HttpRequest request = HttpRequest.get(url, true, "maxAirports", maxAirports);
         return performRequest(request);
     }
+
+    public JSONObject getNearestAirport(double latitude, double longitude) {
+        return getNearestAirport(latitude, longitude, 1);
+    }
+
 
     public JSONObject matchAirports(String partialAirportName) {
         String url = baseURL + "/match/" + partialAirportName;
