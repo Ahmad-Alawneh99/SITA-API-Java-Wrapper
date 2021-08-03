@@ -2,7 +2,7 @@ package apis;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONObject;
-
+//TODO: overload methods to allow for optional parameters
 public class AirlineAPI {
     private String baseURL = "https://sitaopen.api.aero/data/v1/airlines";
     private String apiKey;
