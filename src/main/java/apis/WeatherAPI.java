@@ -4,7 +4,7 @@ import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONObject;
 
 public class WeatherAPI {
-    private String baseURL = "https://sitaopen.api.aero/weather/v1";
+    private final String baseURL = "https://sitaopen.api.aero/weather/v1";
     private String apiKey;
     private static WeatherAPI instance;
 
@@ -13,6 +13,10 @@ public class WeatherAPI {
             instance = new WeatherAPI();
         }
         return instance;
+    }
+
+    private WeatherAPI() {
+
     }
 
     public void setApiKey(String apiKey) {

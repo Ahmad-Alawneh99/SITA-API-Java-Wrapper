@@ -1,10 +1,11 @@
 package apis;
 
 import com.github.kevinsawicki.http.HttpRequest;
+import oracle.jrockit.jfr.FlightRecorder;
 import org.json.JSONObject;
 //TODO: refactor query parameters
 public class FlightInfoAPI {
-    private String baseURL = "https://flifo.api.aero/flifo/flightinfo/v1/flights";
+    private final String baseURL = "https://flifo.api.aero/flifo/flightinfo/v1/flights";
     private String apiKey;
     private static FlightInfoAPI instance;
 
@@ -13,6 +14,10 @@ public class FlightInfoAPI {
             instance = new FlightInfoAPI();
         }
         return instance;
+    }
+
+    private FlightInfoAPI() {
+
     }
 
     public void setApiKey(String apiKey) {

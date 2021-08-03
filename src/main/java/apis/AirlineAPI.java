@@ -4,7 +4,7 @@ import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONObject;
 
 public class AirlineAPI {
-    private String baseURL = "https://sitaopen.api.aero/data/v1/airlines";
+    private final String baseURL = "https://sitaopen.api.aero/data/v1/airlines";
     private String apiKey;
     private static AirlineAPI instance;
 
@@ -13,6 +13,10 @@ public class AirlineAPI {
             instance = new AirlineAPI();
         }
         return instance;
+    }
+
+    private AirlineAPI() {
+
     }
 
     public void setApiKey(String apiKey) {
