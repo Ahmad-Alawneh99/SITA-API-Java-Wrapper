@@ -2,7 +2,7 @@ package apis;
 
 import com.github.kevinsawicki.http.HttpRequest;
 import org.json.JSONObject;
-//TODO: overload methods to allow for optional parameters
+
 public class AirlineAPI {
     private String baseURL = "https://sitaopen.api.aero/data/v1/airlines";
     private String apiKey;
@@ -19,24 +19,49 @@ public class AirlineAPI {
         this.apiKey = apiKey;
     }
 
-    public JSONObject performRequest(String url, boolean showCargoAirlines) {
-        String resultBody = HttpRequest.get(url, true, "showCargoAirlines", String.valueOf(showCargoAirlines))
-                .header("X-apiKey", apiKey)
+    public JSONObject performRequest(HttpRequest request) {
+        String resultBody = request.header("X-apiKey", apiKey)
                 .body();
         return new JSONObject(resultBody);
     }
 
-    public JSONObject getAllAirlines(boolean showCargoAirlines) {
-        return performRequest(baseURL, showCargoAirlines);
+    public JSONObject getAllAirlines(String sortBy, boolean showCargoAirlines) {
+        HttpRequest request = HttpRequest.get(baseURL, true, "sortBy",
+                sortBy, "showCargoAirlines", showCargoAirlines);
+        return performRequest(request);
     }
+
+    public JSONObject getAllAirlines() {
+        return getAllAirlines("name",false);
+    }
+
+    public JSONObject getAllAirlines(String sortBy) {
+        return getAllAirlines(sortBy, false);
+    }
+
+    public JSONObject getAllAirlines(boolean showCargoAirlines) {
+        return getAllAirlines("name", showCargoAirlines);
+    }
+
 
     public JSONObject getAirlineByCode(String airlineCode, boolean showCargoAirlines) {
         String url = baseURL + "/" + airlineCode;
-        return performRequest(url, showCargoAirlines);
+        HttpRequest request = HttpRequest.get(url, true, "showCargoAirlines", showCargoAirlines);
+        return performRequest(request);
     }
+
+    public JSONObject getAirlineByCode(String airlineCode) {
+        return getAirlineByCode(airlineCode, false);
+    }
+
 
     public JSONObject matchAirlines(String partialAirlineName, boolean showCargoAirlines) {
         String url = baseURL + "/match/" + partialAirlineName;
-        return performRequest(url, showCargoAirlines);
+        HttpRequest request = HttpRequest.get(url, true, "showCargoAirlines", showCargoAirlines);
+        return performRequest(request);
+    }
+
+    public JSONObject matchAirlines(String partialAirlineName) {
+        return matchAirlines(partialAirlineName, false);
     }
 }
